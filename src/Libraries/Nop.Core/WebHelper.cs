@@ -169,7 +169,7 @@ namespace Nop.Core
                 useSsl = IsCurrentConnectionSecured();
 
             //get the host considering using SSL
-            var url = GetStoreHost(useSsl.Value).TrimEnd('/');
+            var url = GetStoreHost(useSsl.Value, lowercaseUrl).TrimEnd('/');
 
             //get full URL with or without query string
             url += includeQueryString ? GetRawUrl(_httpContextAccessor.HttpContext.Request) 
@@ -206,8 +206,9 @@ namespace Nop.Core
         /// Gets store host location
         /// </summary>
         /// <param name="useSsl">Whether to get SSL secured URL</param>
+        /// <param name="lowercaseUrl">Value indicating whether to lowercase URL</param>
         /// <returns>Store host location</returns>
-        public virtual string GetStoreHost(bool useSsl)
+        public virtual string GetStoreHost(bool useSsl, bool lowercaseUrl = true)
         {
             var result = string.Empty;
 
@@ -258,30 +259,26 @@ namespace Nop.Core
             if (!result.EndsWith("/"))
                 result += "/";
 
-            return result.ToLowerInvariant();
+            if (lowercaseUrl)
+                result = result.ToLowerInvariant();
+
+            return result;
         }
 
         /// <summary>
         /// Gets store location
         /// </summary>
+        /// <param name="useSsl">Whether to get SSL secured URL; pass null to determine automatically</param>
+        /// <param name="lowercaseUrl">Value indicating whether to lowercase URL</param>
         /// <returns>Store location</returns>
-        public virtual string GetStoreLocation()
+        public virtual string GetStoreLocation(bool? useSsl = null, bool lowercaseUrl = true)
         {
             //whether connection is secured
-            var useSsl = IsCurrentConnectionSecured();
+            if (!useSsl.HasValue)
+                useSsl = IsCurrentConnectionSecured();
 
-            return GetStoreLocation(useSsl);
-        }
-
-        /// <summary>
-        /// Gets store location
-        /// </summary>
-        /// <param name="useSsl">Whether to get SSL secured URL</param>
-        /// <returns>Store location</returns>
-        public virtual string GetStoreLocation(bool useSsl)
-        {
             //get store host
-            var host = GetStoreHost(useSsl).TrimEnd('/');
+            var host = GetStoreHost(useSsl.Value, lowercaseUrl).TrimEnd('/');
 
             //add application path base if exists
             if (IsRequestAvailable())
@@ -290,7 +287,10 @@ namespace Nop.Core
             if (!host.EndsWith("/"))
                 host += "/";
 
-            return host.ToLowerInvariant();
+            if (lowercaseUrl)
+                host = host.ToLowerInvariant();
+
+            return host;
         }
         
         /// <summary>
@@ -317,20 +317,27 @@ namespace Nop.Core
         /// <param name="url">URL to modify</param>
         /// <param name="queryStringModification">Query string modification</param>
         /// <param name="anchor">Anchor</param>
+        /// <param name="lowercaseUrl">Value indicating whether to lowercase URL</param>
         /// <returns>New URL</returns>
-        public virtual string ModifyQueryString(string url, string queryStringModification, string anchor)
+        public virtual string ModifyQueryString(string url, string queryStringModification, string anchor, bool lowercaseUrl = true)
         {
             if (url == null)
                 url = string.Empty;
-            url = url.ToLowerInvariant();
+
+            if (lowercaseUrl)
+                url = url.ToLowerInvariant();
 
             if (queryStringModification == null)
                 queryStringModification = string.Empty;
-            queryStringModification = queryStringModification.ToLowerInvariant();
+
+            if (lowercaseUrl)
+                queryStringModification = queryStringModification.ToLowerInvariant();
 
             if (anchor == null)
                 anchor = string.Empty;
-            anchor = anchor.ToLowerInvariant();
+
+            if (lowercaseUrl)
+                anchor = anchor.ToLowerInvariant();
 
 
             string str = string.Empty;
@@ -413,7 +420,11 @@ namespace Nop.Core
             {
                 str2 = anchor;
             }
-            return (url + (string.IsNullOrEmpty(str) ? "" : ("?" + str)) + (string.IsNullOrEmpty(str2) ? "" : ("#" + str2))).ToLowerInvariant();
+            var result = (url + (string.IsNullOrEmpty(str) ? "" : ("?" + str)) + (string.IsNullOrEmpty(str2) ? "" : ("#" + str2)));
+            if (lowercaseUrl)
+                result = result.ToLowerInvariant();
+
+            return result;
         }
 
         /// <summary>
@@ -421,16 +432,21 @@ namespace Nop.Core
         /// </summary>
         /// <param name="url">URL to modify</param>
         /// <param name="queryString">Query string to remove</param>
+        /// <param name="lowercaseUrl">Value indicating whether to lowercase URL</param>
         /// <returns>New URL without passed query string</returns>
-        public virtual string RemoveQueryString(string url, string queryString)
+        public virtual string RemoveQueryString(string url, string queryString, bool lowercaseUrl = true)
         {
             if (url == null)
                 url = string.Empty;
-            url = url.ToLowerInvariant();
+
+            if (lowercaseUrl)
+                url = url.ToLowerInvariant();
 
             if (queryString == null)
                 queryString = string.Empty;
-            queryString = queryString.ToLowerInvariant();
+
+            if (lowercaseUrl)
+                queryString = queryString.ToLowerInvariant();
 
 
             string str = string.Empty;

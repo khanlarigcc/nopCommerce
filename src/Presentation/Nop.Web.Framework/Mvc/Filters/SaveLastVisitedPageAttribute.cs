@@ -82,7 +82,7 @@ namespace Nop.Web.Framework.Mvc.Filters
                     return;
 
                 //get current page
-                var pageUrl = _webHelper.GetThisPageUrl(true);
+                var pageUrl = _webHelper.GetThisPageUrl(true, lowercaseUrl: false);
                 if (string.IsNullOrEmpty(pageUrl))
                     return;
                 

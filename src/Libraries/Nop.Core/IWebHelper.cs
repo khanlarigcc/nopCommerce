@@ -38,21 +38,17 @@ namespace Nop.Core
         /// Gets store host location
         /// </summary>
         /// <param name="useSsl">Whether to get SSL secured URL</param>
+        /// <param name="lowercaseUrl">Value indicating whether to lowercase URL</param>
         /// <returns>Store host location</returns>
-        string GetStoreHost(bool useSsl);
+        string GetStoreHost(bool useSsl, bool lowercaseUrl = true);
 
         /// <summary>
         /// Gets store location
         /// </summary>
+        /// <param name="useSsl">Whether to get SSL secured URL; pass null to determine automatically</param>
+        /// <param name="lowercaseUrl">Value indicating whether to lowercase URL</param>
         /// <returns>Store location</returns>
-        string GetStoreLocation();
-
-        /// <summary>
-        /// Gets store location
-        /// </summary>
-        /// <param name="useSsl">Whether to get SSL secured URL</param>
-        /// <returns>Store location</returns>
-        string GetStoreLocation(bool useSsl);
+        string GetStoreLocation(bool? useSsl = null, bool lowercaseUrl = true);
 
         /// <summary>
         /// Returns true if the requested resource is one of the typical resources that needn't be processed by the CMS engine.
@@ -66,16 +62,18 @@ namespace Nop.Core
         /// <param name="url">URL to modify</param>
         /// <param name="queryStringModification">Query string modification</param>
         /// <param name="anchor">Anchor</param>
+        /// <param name="lowercaseUrl">Value indicating whether to lowercase URL</param>
         /// <returns>New URL</returns>
-        string ModifyQueryString(string url, string queryStringModification, string anchor);
+        string ModifyQueryString(string url, string queryStringModification, string anchor, bool lowercaseUrl = true);
 
         /// <summary>
         /// Remove query string from the URL
         /// </summary>
         /// <param name="url">URL to modify</param>
         /// <param name="queryString">Query string to remove</param>
+        /// <param name="lowercaseUrl">Value indicating whether to lowercase URL</param>
         /// <returns>New URL without passed query string</returns>
-        string RemoveQueryString(string url, string queryString);
+        string RemoveQueryString(string url, string queryString, bool lowercaseUrl = true);
 
         /// <summary>
         /// Gets query string value by name

@@ -188,8 +188,8 @@ namespace Nop.Web.Factories
             {
                 foreach (var option in activeOptions)
                 {
-                    var currentPageUrl = _webHelper.GetThisPageUrl(true);
-                    var sortUrl = _webHelper.ModifyQueryString(currentPageUrl, "orderby=" + (option.Key).ToString(), null);
+                    var currentPageUrl = _webHelper.GetThisPageUrl(true, lowercaseUrl: false);
+                    var sortUrl = _webHelper.ModifyQueryString(currentPageUrl, "orderby=" + (option.Key).ToString(), null, false);
                     var sortValue = ((ProductSortingEnum)option.Key).GetLocalizedEnum(_localizationService, _workContext);
                     pagingFilteringModel.AvailableSortOptions.Add(new SelectListItem
                     {
@@ -222,19 +222,19 @@ namespace Nop.Web.Factories
             pagingFilteringModel.ViewMode = viewMode;
             if (pagingFilteringModel.AllowProductViewModeChanging)
             {
-                var currentPageUrl = _webHelper.GetThisPageUrl(true);
+                var currentPageUrl = _webHelper.GetThisPageUrl(true, lowercaseUrl: false);
                 //grid
                 pagingFilteringModel.AvailableViewModes.Add(new SelectListItem
                 {
                     Text = _localizationService.GetResource("Catalog.ViewMode.Grid"),
-                    Value = _webHelper.ModifyQueryString(currentPageUrl, "viewmode=grid", null),
+                    Value = _webHelper.ModifyQueryString(currentPageUrl, "viewmode=grid", null, false),
                     Selected = viewMode == "grid"
                 });
                 //list
                 pagingFilteringModel.AvailableViewModes.Add(new SelectListItem
                 {
                     Text = _localizationService.GetResource("Catalog.ViewMode.List"),
-                    Value = _webHelper.ModifyQueryString(currentPageUrl, "viewmode=list", null),
+                    Value = _webHelper.ModifyQueryString(currentPageUrl, "viewmode=list", null, false),
                     Selected = viewMode == "list"
                 });
             }
@@ -281,9 +281,9 @@ namespace Nop.Web.Factories
                         }
                     }
 
-                    var currentPageUrl = _webHelper.GetThisPageUrl(true);
-                    var sortUrl = _webHelper.ModifyQueryString(currentPageUrl, "pagesize={0}", null);
-                    sortUrl = _webHelper.RemoveQueryString(sortUrl, "pagenumber");
+                    var currentPageUrl = _webHelper.GetThisPageUrl(true, lowercaseUrl: false);
+                    var sortUrl = _webHelper.ModifyQueryString(currentPageUrl, "pagesize={0}", null, false);
+                    sortUrl = _webHelper.RemoveQueryString(sortUrl, "pagenumber", false);
 
                     foreach (var pageSize in pageSizes)
                     {

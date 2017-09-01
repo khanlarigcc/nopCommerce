@@ -154,7 +154,7 @@ namespace Nop.Web.Models.Catalog
                 const string excludedQueryStringParams = "pagenumber";
                 var excludedQueryStringParamsSplitted = excludedQueryStringParams.Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (string exclude in excludedQueryStringParamsSplitted)
-                    url = webHelper.RemoveQueryString(url, exclude);
+                    url = webHelper.RemoveQueryString(url, exclude, false);
                 return url;
             }
 
@@ -230,7 +230,7 @@ namespace Nop.Web.Models.Catalog
                             item.Selected = true;
 
                         //filter URL
-                        string url = webHelper.ModifyQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM + "=" + fromQuery + "-" + toQuery, null);
+                        string url = webHelper.ModifyQueryString(webHelper.GetThisPageUrl(true, lowercaseUrl: false), QUERYSTRINGPARAM + "=" + fromQuery + "-" + toQuery, null, false);
                         url = ExcludeQueryStringParams(url, webHelper);
                         item.FilterUrl = url;
 
@@ -241,7 +241,7 @@ namespace Nop.Web.Models.Catalog
                     if (selectedPriceRange != null)
                     {
                         //remove filter URL
-                        string url = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM);
+                        string url = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true, lowercaseUrl: false), QUERYSTRINGPARAM, false);
                         url = ExcludeQueryStringParams(url, webHelper);
                         this.RemoveFilterUrl = url;
                     }
@@ -333,7 +333,7 @@ namespace Nop.Web.Models.Catalog
                 const string excludedQueryStringParams = "pagenumber";
                 var excludedQueryStringParamsSplitted = excludedQueryStringParams.Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (string exclude in excludedQueryStringParamsSplitted)
-                    url = webHelper.RemoveQueryString(url, exclude);
+                    url = webHelper.RemoveQueryString(url, exclude, false);
                 return url;
             }
 
@@ -420,7 +420,7 @@ namespace Nop.Web.Models.Catalog
 
                 //prepare the model properties
                 Enabled = true;
-                var removeFilterUrl = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM);
+                var removeFilterUrl = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true, lowercaseUrl: false), QUERYSTRINGPARAM, false);
                 RemoveFilterUrl = ExcludeQueryStringParams(removeFilterUrl, webHelper);
 
                 //get already filtered specification options
@@ -439,7 +439,7 @@ namespace Nop.Web.Models.Catalog
                     //filter URL
                     var alreadyFiltered = alreadyFilteredSpecOptionIds.Concat(new List<int> { x.SpecificationAttributeOptionId });
                     var queryString = $"{QUERYSTRINGPARAM}={GenerateFilteredSpecQueryParam(alreadyFiltered.ToList())}";
-                    var filterUrl = webHelper.ModifyQueryString(webHelper.GetThisPageUrl(true), queryString, null);
+                    var filterUrl = webHelper.ModifyQueryString(webHelper.GetThisPageUrl(true, lowercaseUrl: false), queryString, null, false);
 
                     return new SpecificationFilterItem()
                     {
