@@ -89,11 +89,11 @@ namespace Nop.Web.Framework.Mvc.Filters
 
                 //page should be secured, so redirect (permanent) to HTTPS version of page
                 if (useSsl && !currentConnectionSecured && _storeContext.CurrentStore.SslEnabled)
-                    filterContext.Result = new RedirectResult(_webHelper.GetThisPageUrl(true, true), true);
+                    filterContext.Result = new RedirectResult(_webHelper.GetThisPageUrl(true, true, false), true);
 
                 //page shouldn't be secured, so redirect (permanent) to HTTP version of page
                 if (!useSsl && currentConnectionSecured)
-                    filterContext.Result = new RedirectResult(_webHelper.GetThisPageUrl(true, false), true);
+                    filterContext.Result = new RedirectResult(_webHelper.GetThisPageUrl(true, false, false), true);
             }
 
             #endregion

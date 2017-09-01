@@ -65,7 +65,7 @@ namespace Nop.Web.Framework.Mvc.Filters
                 var urlWith3W = $"{urlScheme}www.";
 
                 //get requested URL
-                var currentUrl = _webHelper.GetThisPageUrl(true);
+                var currentUrl = _webHelper.GetThisPageUrl(true, lowercaseUrl: false);
 
                 //whether requested URL starts with WWW
                 var urlStartsWith3W = currentUrl.StartsWith(urlWith3W, StringComparison.OrdinalIgnoreCase);
