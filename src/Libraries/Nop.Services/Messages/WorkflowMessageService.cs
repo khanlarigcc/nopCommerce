@@ -326,7 +326,7 @@ namespace Nop.Services.Messages
             if (vendor == null)
                 throw new ArgumentNullException(nameof(vendor));
 
-            var store = _storeService.GetStoreById(order.StoreId) ?? _storeContext.CurrentStore;
+            var store = _storeService.GetCachedStoreById(order.StoreId) ?? _storeContext.CurrentStore;
             languageId = EnsureLanguageIsActive(languageId, store.Id);
 
             var messageTemplate = GetActiveMessageTemplate(MessageTemplateSystemNames.OrderPlacedVendorNotification, store.Id);
@@ -362,7 +362,7 @@ namespace Nop.Services.Messages
             if (order == null)
                 throw new ArgumentNullException(nameof(order));
 
-            var store = _storeService.GetStoreById(order.StoreId) ?? _storeContext.CurrentStore;
+            var store = _storeService.GetCachedStoreById(order.StoreId) ?? _storeContext.CurrentStore;
             languageId = EnsureLanguageIsActive(languageId, store.Id);
 
             var messageTemplate = GetActiveMessageTemplate(MessageTemplateSystemNames.OrderPlacedStoreOwnerNotification, store.Id);
@@ -398,7 +398,7 @@ namespace Nop.Services.Messages
             if (order == null)
                 throw new ArgumentNullException(nameof(order));
 
-            var store = _storeService.GetStoreById(order.StoreId) ?? _storeContext.CurrentStore;
+            var store = _storeService.GetCachedStoreById(order.StoreId) ?? _storeContext.CurrentStore;
             languageId = EnsureLanguageIsActive(languageId, store.Id);
 
             var messageTemplate = GetActiveMessageTemplate(MessageTemplateSystemNames.OrderPaidStoreOwnerNotification, store.Id);
@@ -437,7 +437,7 @@ namespace Nop.Services.Messages
             if (order == null)
                 throw new ArgumentNullException(nameof(order));
 
-            var store = _storeService.GetStoreById(order.StoreId) ?? _storeContext.CurrentStore;
+            var store = _storeService.GetCachedStoreById(order.StoreId) ?? _storeContext.CurrentStore;
             languageId = EnsureLanguageIsActive(languageId, store.Id);
 
             var messageTemplate = GetActiveMessageTemplate(MessageTemplateSystemNames.OrderPaidCustomerNotification, store.Id);
@@ -478,7 +478,7 @@ namespace Nop.Services.Messages
             if (vendor == null)
                 throw new ArgumentNullException(nameof(vendor));
 
-            var store = _storeService.GetStoreById(order.StoreId) ?? _storeContext.CurrentStore;
+            var store = _storeService.GetCachedStoreById(order.StoreId) ?? _storeContext.CurrentStore;
             languageId = EnsureLanguageIsActive(languageId, store.Id);
 
             var messageTemplate = GetActiveMessageTemplate(MessageTemplateSystemNames.OrderPaidVendorNotification, store.Id);
@@ -517,7 +517,7 @@ namespace Nop.Services.Messages
             if (order == null)
                 throw new ArgumentNullException(nameof(order));
 
-            var store = _storeService.GetStoreById(order.StoreId) ?? _storeContext.CurrentStore;
+            var store = _storeService.GetCachedStoreById(order.StoreId) ?? _storeContext.CurrentStore;
             languageId = EnsureLanguageIsActive(languageId, store.Id);
 
             var messageTemplate = GetActiveMessageTemplate(MessageTemplateSystemNames.OrderPlacedCustomerNotification, store.Id);
@@ -558,7 +558,7 @@ namespace Nop.Services.Messages
             if (order == null)
                 throw new Exception("Order cannot be loaded");
 
-            var store = _storeService.GetStoreById(order.StoreId) ?? _storeContext.CurrentStore;
+            var store = _storeService.GetCachedStoreById(order.StoreId) ?? _storeContext.CurrentStore;
             languageId = EnsureLanguageIsActive(languageId, store.Id);
 
             var messageTemplate = GetActiveMessageTemplate(MessageTemplateSystemNames.ShipmentSentCustomerNotification, store.Id);
@@ -599,7 +599,7 @@ namespace Nop.Services.Messages
             if (order == null)
                 throw new Exception("Order cannot be loaded");
 
-            var store = _storeService.GetStoreById(order.StoreId) ?? _storeContext.CurrentStore;
+            var store = _storeService.GetCachedStoreById(order.StoreId) ?? _storeContext.CurrentStore;
             languageId = EnsureLanguageIsActive(languageId, store.Id);
 
             var messageTemplate = GetActiveMessageTemplate(MessageTemplateSystemNames.ShipmentDeliveredCustomerNotification, store.Id);
@@ -639,7 +639,7 @@ namespace Nop.Services.Messages
             if (order == null)
                 throw new ArgumentNullException(nameof(order));
 
-            var store = _storeService.GetStoreById(order.StoreId) ?? _storeContext.CurrentStore;
+            var store = _storeService.GetCachedStoreById(order.StoreId) ?? _storeContext.CurrentStore;
             languageId = EnsureLanguageIsActive(languageId, store.Id);
 
             var messageTemplate = GetActiveMessageTemplate(MessageTemplateSystemNames.OrderCompletedCustomerNotification, store.Id);
@@ -676,7 +676,7 @@ namespace Nop.Services.Messages
             if (order == null)
                 throw new ArgumentNullException(nameof(order));
 
-            var store = _storeService.GetStoreById(order.StoreId) ?? _storeContext.CurrentStore;
+            var store = _storeService.GetCachedStoreById(order.StoreId) ?? _storeContext.CurrentStore;
             languageId = EnsureLanguageIsActive(languageId, store.Id);
 
             var messageTemplate = GetActiveMessageTemplate(MessageTemplateSystemNames.OrderCancelledCustomerNotification, store.Id);
@@ -713,7 +713,7 @@ namespace Nop.Services.Messages
             if (order == null)
                 throw new ArgumentNullException(nameof(order));
 
-            var store = _storeService.GetStoreById(order.StoreId) ?? _storeContext.CurrentStore;
+            var store = _storeService.GetCachedStoreById(order.StoreId) ?? _storeContext.CurrentStore;
             languageId = EnsureLanguageIsActive(languageId, store.Id);
 
             var messageTemplate = GetActiveMessageTemplate(MessageTemplateSystemNames.OrderRefundedStoreOwnerNotification, store.Id);
@@ -751,7 +751,7 @@ namespace Nop.Services.Messages
             if (order == null)
                 throw new ArgumentNullException(nameof(order));
 
-            var store = _storeService.GetStoreById(order.StoreId) ?? _storeContext.CurrentStore;
+            var store = _storeService.GetCachedStoreById(order.StoreId) ?? _storeContext.CurrentStore;
             languageId = EnsureLanguageIsActive(languageId, store.Id);
 
             var messageTemplate = GetActiveMessageTemplate(MessageTemplateSystemNames.OrderRefundedCustomerNotification, store.Id);
@@ -790,7 +790,7 @@ namespace Nop.Services.Messages
            
             var order = orderNote.Order;
 
-            var store = _storeService.GetStoreById(order.StoreId) ?? _storeContext.CurrentStore;
+            var store = _storeService.GetCachedStoreById(order.StoreId) ?? _storeContext.CurrentStore;
             languageId = EnsureLanguageIsActive(languageId, store.Id);
 
             var messageTemplate = GetActiveMessageTemplate(MessageTemplateSystemNames.NewOrderNoteAddedCustomerNotification, store.Id);
@@ -827,7 +827,7 @@ namespace Nop.Services.Messages
             if (recurringPayment == null)
                 throw new ArgumentNullException(nameof(recurringPayment));
 
-            var store = _storeService.GetStoreById(recurringPayment.InitialOrder.StoreId) ?? _storeContext.CurrentStore;
+            var store = _storeService.GetCachedStoreById(recurringPayment.InitialOrder.StoreId) ?? _storeContext.CurrentStore;
             languageId = EnsureLanguageIsActive(languageId, store.Id);
 
             var messageTemplate = GetActiveMessageTemplate(MessageTemplateSystemNames.RecurringPaymentCancelledStoreOwnerNotification, store.Id);
@@ -864,7 +864,7 @@ namespace Nop.Services.Messages
             if (recurringPayment == null)
                 throw new ArgumentNullException(nameof(recurringPayment));
 
-            var store = _storeService.GetStoreById(recurringPayment.InitialOrder.StoreId) ?? _storeContext.CurrentStore;
+            var store = _storeService.GetCachedStoreById(recurringPayment.InitialOrder.StoreId) ?? _storeContext.CurrentStore;
             languageId = EnsureLanguageIsActive(languageId, store.Id);
 
             var messageTemplate = GetActiveMessageTemplate(MessageTemplateSystemNames.RecurringPaymentCancelledCustomerNotification, store.Id);
@@ -901,7 +901,7 @@ namespace Nop.Services.Messages
             if (recurringPayment == null)
                 throw new ArgumentNullException(nameof(recurringPayment));
 
-            var store = _storeService.GetStoreById(recurringPayment.InitialOrder.StoreId) ?? _storeContext.CurrentStore;
+            var store = _storeService.GetCachedStoreById(recurringPayment.InitialOrder.StoreId) ?? _storeContext.CurrentStore;
             languageId = EnsureLanguageIsActive(languageId, store.Id);
 
             var messageTemplate = GetActiveMessageTemplate(MessageTemplateSystemNames.RecurringPaymentFailedCustomerNotification, store.Id);
@@ -1096,7 +1096,7 @@ namespace Nop.Services.Messages
             if (returnRequest == null)
                 throw new ArgumentNullException(nameof(returnRequest));
 
-            var store = _storeService.GetStoreById(orderItem.Order.StoreId) ?? _storeContext.CurrentStore;
+            var store = _storeService.GetCachedStoreById(orderItem.Order.StoreId) ?? _storeContext.CurrentStore;
             languageId = EnsureLanguageIsActive(languageId, store.Id);
 
             var messageTemplate = GetActiveMessageTemplate(MessageTemplateSystemNames.NewReturnRequestStoreOwnerNotification, store.Id);
@@ -1133,7 +1133,7 @@ namespace Nop.Services.Messages
             if (returnRequest == null)
                 throw new ArgumentNullException(nameof(returnRequest));
 
-            var store = _storeService.GetStoreById(orderItem.Order.StoreId) ?? _storeContext.CurrentStore;
+            var store = _storeService.GetCachedStoreById(orderItem.Order.StoreId) ?? _storeContext.CurrentStore;
             languageId = EnsureLanguageIsActive(languageId, store.Id);
 
             var messageTemplate = GetActiveMessageTemplate(MessageTemplateSystemNames.NewReturnRequestCustomerNotification, store.Id);
@@ -1174,7 +1174,7 @@ namespace Nop.Services.Messages
             if (returnRequest == null)
                 throw new ArgumentNullException(nameof(returnRequest));
 
-            var store = _storeService.GetStoreById(orderItem.Order.StoreId) ?? _storeContext.CurrentStore;
+            var store = _storeService.GetCachedStoreById(orderItem.Order.StoreId) ?? _storeContext.CurrentStore;
             languageId = EnsureLanguageIsActive(languageId, store.Id);
 
             var messageTemplate = GetActiveMessageTemplate(MessageTemplateSystemNames.ReturnRequestStatusChangedCustomerNotification, store.Id);
@@ -1298,7 +1298,7 @@ namespace Nop.Services.Messages
             if (privateMessage == null)
                 throw new ArgumentNullException(nameof(privateMessage));
 
-            var store = _storeService.GetStoreById(privateMessage.StoreId) ?? _storeContext.CurrentStore;
+            var store = _storeService.GetCachedStoreById(privateMessage.StoreId) ?? _storeContext.CurrentStore;
 
             var messageTemplate = GetActiveMessageTemplate(MessageTemplateSystemNames.PrivateMessageNotification, store.Id);
             if (messageTemplate == null )
@@ -1413,7 +1413,7 @@ namespace Nop.Services.Messages
                 throw new ArgumentNullException(nameof(giftCard));
 
             var order = giftCard.PurchasedWithOrderItem != null ? giftCard.PurchasedWithOrderItem.Order : null;
-            var store = order != null ? _storeService.GetStoreById(order.StoreId) ?? _storeContext.CurrentStore : _storeContext.CurrentStore;
+            var store = order != null ? _storeService.GetCachedStoreById(order.StoreId) ?? _storeContext.CurrentStore : _storeContext.CurrentStore;
 
             languageId = EnsureLanguageIsActive(languageId, store.Id);
 
@@ -1668,7 +1668,7 @@ namespace Nop.Services.Messages
             if (subscription == null)
                 throw new ArgumentNullException(nameof(subscription));
 
-            var store = _storeService.GetStoreById(subscription.StoreId) ?? _storeContext.CurrentStore;
+            var store = _storeService.GetCachedStoreById(subscription.StoreId) ?? _storeContext.CurrentStore;
             languageId = EnsureLanguageIsActive(languageId, store.Id);
 
             var messageTemplate = GetActiveMessageTemplate(MessageTemplateSystemNames.BackInStockNotification, store.Id);

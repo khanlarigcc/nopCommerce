@@ -3,7 +3,7 @@
 @using Nop.Services.Stores
 @inject IStoreService storeService
 @{
-    var stores = storeService.GetAllStores();
+    var stores = storeService.GetAllCachedStores();
 }
 
     <div class="panel-group">

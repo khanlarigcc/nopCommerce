@@ -34,7 +34,7 @@ namespace Nop.Services.Tests.Catalog
         private CatalogSettings _catalogSettings;
         private IStaticCacheManager _cacheManager;
 
-        private Store _store;
+        private StoreForCaching _store;
 
         [SetUp]
         public new void SetUp()
@@ -42,7 +42,7 @@ namespace Nop.Services.Tests.Catalog
             _workContext = MockRepository.GenerateMock<IWorkContext>();
             _workContext.Expect(w => w.WorkingCurrency).Return(new Currency { RoundingType = RoundingType.Rounding001 });
 
-            _store = new Store { Id = 1 };
+            _store = new StoreForCaching { Id = 1 };
             _storeContext = MockRepository.GenerateMock<IStoreContext>();
             _storeContext.Expect(x => x.CurrentStore).Return(_store);
 

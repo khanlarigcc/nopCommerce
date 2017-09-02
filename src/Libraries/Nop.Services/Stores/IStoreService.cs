@@ -19,6 +19,11 @@ namespace Nop.Services.Stores
         /// </summary>
         /// <returns>Stores</returns>
         IList<Store> GetAllStores();
+        /// <summary>
+        /// Gets all stores (cached store entities for performance optimization)
+        /// </summary>
+        /// <returns>Stores</returns>
+        IList<StoreForCaching> GetAllCachedStores();
 
         /// <summary>
         /// Gets a store 
@@ -26,6 +31,12 @@ namespace Nop.Services.Stores
         /// <param name="storeId">Store identifier</param>
         /// <returns>Store</returns>
         Store GetStoreById(int storeId);
+        /// <summary>
+        /// Gets a store (cached store entity for performance optimization)
+        /// </summary>
+        /// <param name="storeId">Store identifier</param>
+        /// <returns>Store</returns>
+        StoreForCaching GetCachedStoreById(int storeId);
 
         /// <summary>
         /// Inserts a store

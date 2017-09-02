@@ -104,7 +104,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             if (!excludeProperties && country != null)
                 model.SelectedStoreIds = _storeMappingService.GetStoresIdsWithAccess(country).ToList();
 
-            var allStores = _storeService.GetAllStores();
+            var allStores = _storeService.GetAllCachedStores();
             foreach (var store in allStores)
             {
                 model.AvailableStores.Add(new SelectListItem
@@ -121,7 +121,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             country.LimitedToStores = model.SelectedStoreIds.Any();
 
             var existingStoreMappings = _storeMappingService.GetStoreMappings(country);
-            var allStores = _storeService.GetAllStores();
+            var allStores = _storeService.GetAllCachedStores();
             foreach (var store in allStores)
             {
                 if (model.SelectedStoreIds.Contains(store.Id))

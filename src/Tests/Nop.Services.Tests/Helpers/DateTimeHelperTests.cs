@@ -23,7 +23,7 @@ namespace Nop.Services.Tests.Helpers
         private ISettingService _settingService;
         private DateTimeSettings _dateTimeSettings;
         private IDateTimeHelper _dateTimeHelper;
-        private Store _store;
+        private StoreForCaching _store;
 
         [SetUp]
         public new void SetUp()
@@ -33,7 +33,7 @@ namespace Nop.Services.Tests.Helpers
 
             _workContext = MockRepository.GenerateMock<IWorkContext>();
 
-            _store = new Store { Id = 1 };
+            _store = new StoreForCaching { Id = 1 };
             _storeContext = MockRepository.GenerateMock<IStoreContext>();
             _storeContext.Expect(x => x.CurrentStore).Return(_store);
 

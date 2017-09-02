@@ -32,7 +32,7 @@ namespace Nop.Web.Framework.Extensions
             if (ignoreIfSeveralStores)
             {
                 var storeService = EngineContext.Current.Resolve<IStoreService>();
-                if (storeService.GetAllStores().Count >= 2)
+                if (storeService.GetAllCachedStores().Count >= 2)
                 {
                     localizationSupported = false;
                 }

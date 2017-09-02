@@ -426,7 +426,7 @@ namespace Nop.Services.Customers
                 //update newsletter subscription (if required)
                 if (!String.IsNullOrEmpty(oldEmail) && !oldEmail.Equals(newEmail, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    foreach (var store in _storeService.GetAllStores())
+                    foreach (var store in _storeService.GetAllCachedStores())
                     {
                         var subscriptionOld = _newsLetterSubscriptionService.GetNewsLetterSubscriptionByEmailAndStoreId(oldEmail, store.Id);
                         if (subscriptionOld != null)

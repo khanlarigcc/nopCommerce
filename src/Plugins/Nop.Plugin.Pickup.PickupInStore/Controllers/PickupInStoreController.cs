@@ -78,7 +78,7 @@ namespace Nop.Plugin.Pickup.PickupInStore.Controllers
             var pickupPoints = _storePickupPointService.GetAllStorePickupPoints(pageIndex: command.Page - 1, pageSize: command.PageSize);
             var model = pickupPoints.Select(point =>
             {
-                var store = _storeService.GetStoreById(point.StoreId);
+                var store = _storeService.GetCachedStoreById(point.StoreId);
                 return new StorePickupPointModel
                 {
                     Id = point.Id,
@@ -120,7 +120,7 @@ namespace Nop.Plugin.Pickup.PickupInStore.Controllers
                 model.Address.AvailableStates.Add(new SelectListItem { Text = _localizationService.GetResource("Admin.Address.OtherNonUS"), Value = "0" });
 
             model.AvailableStores.Add(new SelectListItem { Text = _localizationService.GetResource("Admin.Configuration.Settings.StoreScope.AllStores"), Value = "0" });
-            foreach (var store in _storeService.GetAllStores())
+            foreach (var store in _storeService.GetAllCachedStores())
                 model.AvailableStores.Add(new SelectListItem { Text = store.Name, Value = store.Id.ToString() });
 
             return View("~/Plugins/Pickup.PickupInStore/Views/Create.cshtml", model);
@@ -210,7 +210,7 @@ namespace Nop.Plugin.Pickup.PickupInStore.Controllers
                 model.Address.AvailableStates.Add(new SelectListItem { Text = _localizationService.GetResource("Admin.Address.OtherNonUS"), Value = "0" });
 
             model.AvailableStores.Add(new SelectListItem { Text = _localizationService.GetResource("Admin.Configuration.Settings.StoreScope.AllStores"), Value = "0" });
-            foreach (var store in _storeService.GetAllStores())
+            foreach (var store in _storeService.GetAllCachedStores())
                 model.AvailableStores.Add(new SelectListItem { Text = store.Name, Value = store.Id.ToString(), Selected = store.Id == model.StoreId });
 
             return View("~/Plugins/Pickup.PickupInStore/Views/Edit.cshtml", model);

@@ -10,7 +10,7 @@
 @using Nop.Services.Stores
 
 @{
-    var stores = storeService.GetAllStores();
+    var stores = storeService.GetAllCachedStores();
 
     //resources for product tags input
     Html.AppendCssFileParts("~/lib/tagEditor/jquery.tag-editor.css");

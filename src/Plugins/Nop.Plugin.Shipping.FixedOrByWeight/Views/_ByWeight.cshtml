@@ -2,7 +2,7 @@
 @inject Nop.Core.Domain.Common.AdminAreaSettings adminAreaSettings
 @inject Nop.Services.Stores.IStoreService storeService
 @{
-    var stores = storeService.GetAllStores();
+    var stores = storeService.GetAllCachedStores();
 }
 
 <form asp-controller="FixedOrByWeight" asp-action="Configure" method="post" id="shipping-byweight-form">

@@ -129,7 +129,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             if (!excludeProperties && checkoutAttribute != null)
                 model.SelectedStoreIds = _storeMappingService.GetStoresIdsWithAccess(checkoutAttribute).ToList();
 
-            var allStores = _storeService.GetAllStores();
+            var allStores = _storeService.GetAllCachedStores();
             foreach (var store in allStores)
             {
                 model.AvailableStores.Add(new SelectListItem
@@ -146,7 +146,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             checkoutAttribute.LimitedToStores = model.SelectedStoreIds.Any();
 
             var existingStoreMappings = _storeMappingService.GetStoreMappings(checkoutAttribute);
-            var allStores = _storeService.GetAllStores();
+            var allStores = _storeService.GetAllCachedStores();
             foreach (var store in allStores)
             {
                 if (model.SelectedStoreIds.Contains(store.Id))

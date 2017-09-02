@@ -29,7 +29,7 @@ namespace Nop.Web.Areas.Admin.Components
             if (!enabled)
             {
                 //overridden settings
-                var stores = _storeService.GetAllStores();
+                var stores = _storeService.GetAllCachedStores();
                 foreach (var store in stores)
                 {
                     if (!enabled)

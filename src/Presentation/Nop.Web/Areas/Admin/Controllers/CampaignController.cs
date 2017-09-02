@@ -82,7 +82,7 @@ namespace Nop.Web.Areas.Admin.Controllers
                 Text = _localizationService.GetResource("Admin.Common.All"),
                 Value = "0"
             });
-            var stores = _storeService.GetAllStores();
+            var stores = _storeService.GetAllCachedStores();
             foreach (var store in stores)
             {
                 model.AvailableStores.Add(new SelectListItem
@@ -151,7 +151,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageCampaigns))
                 return AccessDeniedView();
 
-            var stores = _storeService.GetAllStores();
+            var stores = _storeService.GetAllCachedStores();
             var model = new CampaignListModel();
 
             model.AvailableStores.Add(new SelectListItem
@@ -390,7 +390,7 @@ namespace Nop.Web.Areas.Admin.Controllers
                 var emailAccount = GetEmailAccount(model.EmailAccountId);
 
                 //subscribers of certain store?
-                var store = _storeService.GetStoreById(campaign.StoreId);
+                var store = _storeService.GetCachedStoreById(campaign.StoreId);
                 var storeId = store != null ? store.Id : 0;
                 var subscriptions = _newsLetterSubscriptionService.GetAllNewsLetterSubscriptions(storeId: storeId, 
                     customerRoleId: model.CustomerRoleId,

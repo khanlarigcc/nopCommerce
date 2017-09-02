@@ -82,7 +82,7 @@ namespace Nop.Plugin.Feed.GoogleShopping.Controllers
             //stores
             model.StoreId = _googleShoppingSettings.StoreId;
             model.AvailableStores.Add(new SelectListItem { Text = _localizationService.GetResource("Admin.Common.All"), Value = "0" });
-            foreach (var s in _storeService.GetAllStores())
+            foreach (var s in _storeService.GetAllCachedStores())
                 model.AvailableStores.Add(new SelectListItem { Text = s.Name, Value = s.Id.ToString() });
             //currencies
             model.CurrencyId = _googleShoppingSettings.CurrencyId;
@@ -95,7 +95,7 @@ namespace Nop.Plugin.Feed.GoogleShopping.Controllers
                 model.AvailableGoogleCategories.Add(new SelectListItem { Text = gc, Value = gc });
 
             //file paths
-            foreach (var store in _storeService.GetAllStores())
+            foreach (var store in _storeService.GetAllCachedStores())
             {
                 var localFilePath = System.IO.Path.Combine(_hostingEnvironment.WebRootPath, "files\\exportimport", store.Id + "-" + _googleShoppingSettings.StaticFileName);
                 if (System.IO.File.Exists(localFilePath))
@@ -155,12 +155,12 @@ namespace Nop.Plugin.Feed.GoogleShopping.Controllers
                 if (plugin == null)
                     throw new Exception("Cannot load the plugin");
 
-                var stores = new List<Store>();
-                var storeById = _storeService.GetStoreById(_googleShoppingSettings.StoreId);
+                var stores = new List<StoreForCaching>();
+                var storeById = _storeService.GetCachedStoreById(_googleShoppingSettings.StoreId);
                 if (storeById != null)
                     stores.Add(storeById);
                 else
-                    stores.AddRange(_storeService.GetAllStores());
+                    stores.AddRange(_storeService.GetAllCachedStores());
 
                 foreach (var store in stores)
                     plugin.GenerateStaticFile(store);

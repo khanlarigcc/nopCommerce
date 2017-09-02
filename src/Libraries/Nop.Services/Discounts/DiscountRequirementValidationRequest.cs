@@ -21,6 +21,6 @@ namespace Nop.Services.Discounts
         /// <summary>
         /// Gets or sets the store
         /// </summary>
-        public Store Store { get; set; }
+        public StoreForCaching Store { get; set; }
     }
 }

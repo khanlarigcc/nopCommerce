@@ -615,7 +615,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
             //stores
             model.AvailableStores.Add(new SelectListItem { Text = _localizationService.GetResource("Admin.Common.All"), Value = "0" });
-            foreach (var s in _storeService.GetAllStores())
+            foreach (var s in _storeService.GetAllCachedStores())
                 model.AvailableStores.Add(new SelectListItem { Text = s.Name, Value = s.Id.ToString() });
 
             //vendors

@@ -8,7 +8,7 @@
     const string hidePanelAttributeName = "HideLatestOrdersPanel";
     var hidePanel = workContext.CurrentCustomer.GetAttribute<bool>(hidePanelAttributeName);
     var gridPageSize = 5;
-    var stores = storeService.GetAllStores();
+    var stores = storeService.GetAllCachedStores();
 }
 
 <div class="box box-info @if(hidePanel){<text>collapsed-box</text>}" id="@panelId">

@@ -118,7 +118,11 @@ namespace Nop.Web.Areas.Admin.Controllers
             model.IsLoggedInAsVendor = _workContext.CurrentVendor != null;
 
             model.AvailableStores.Add(new SelectListItem { Text = _localizationService.GetResource("Admin.Common.All"), Value = "0" });
-            var stores = _storeService.GetAllStores().Select(st => new SelectListItem() { Text = st.Name, Value = st.Id.ToString() });
+            var stores = _storeService.GetAllCachedStores().Select(st => new SelectListItem
+            {
+                Text = st.Name,
+                Value = st.Id.ToString()
+            });
             foreach (var selectListItem in stores)
                 model.AvailableStores.Add(selectListItem);
 

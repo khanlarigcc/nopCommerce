@@ -10,6 +10,6 @@ namespace Nop.Core
         /// <summary>
         /// Gets or sets the current store
         /// </summary>
-        Store CurrentStore { get; }
+        StoreForCaching CurrentStore { get; }
     }
 }

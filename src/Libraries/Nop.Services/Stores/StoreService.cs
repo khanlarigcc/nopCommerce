@@ -31,13 +31,30 @@ namespace Nop.Services.Stores
         /// </summary>
         private const string STORES_PATTERN_KEY = "Nop.stores.";
 
+        /// <summary>
+        /// Key for caching
+        /// </summary>
+        private const string CACHEDSTORES_ALL_KEY = "Nop.cachedstores.all";
+        /// <summary>
+        /// Key for caching
+        /// </summary>
+        /// <remarks>
+        /// {0} : store ID
+        /// </remarks>
+        private const string CACHEDSTORES_BY_ID_KEY = "Nop.cachedstores.id-{0}";
+        /// <summary>
+        /// Key pattern to clear cache
+        /// </summary>
+        private const string CACHEDSTORES_PATTERN_KEY = "Nop.cachedstores.";
+
         #endregion
-        
+
         #region Fields
-        
+
         private readonly IRepository<Store> _storeRepository;
         private readonly IEventPublisher _eventPublisher;
         private readonly ICacheManager _cacheManager;
+        private readonly IStaticCacheManager _staticCacheManager;
 
         #endregion
 
@@ -47,13 +64,16 @@ namespace Nop.Services.Stores
         /// Ctor
         /// </summary>
         /// <param name="cacheManager">Cache manager</param>
+        /// <param name="staticCacheManager">Static cache manager</param>
         /// <param name="storeRepository">Store repository</param>
         /// <param name="eventPublisher">Event published</param>
         public StoreService(ICacheManager cacheManager,
+            IStaticCacheManager staticCacheManager,
             IRepository<Store> storeRepository,
             IEventPublisher eventPublisher)
         {
             this._cacheManager = cacheManager;
+            this._staticCacheManager = staticCacheManager;
             this._storeRepository = storeRepository;
             this._eventPublisher = eventPublisher;
         }
@@ -78,6 +98,7 @@ namespace Nop.Services.Stores
             _storeRepository.Delete(store);
 
             _cacheManager.RemoveByPattern(STORES_PATTERN_KEY);
+            _staticCacheManager.RemoveByPattern(CACHEDSTORES_PATTERN_KEY);
 
             //event notification
             _eventPublisher.EntityDeleted(store);
@@ -89,14 +110,24 @@ namespace Nop.Services.Stores
         /// <returns>Stores</returns>
         public virtual IList<Store> GetAllStores()
         {
-            string key = STORES_ALL_KEY;
-            return _cacheManager.Get(key, () =>
+            return _cacheManager.Get(STORES_ALL_KEY, () =>
             {
                 var query = from s in _storeRepository.Table
                             orderby s.DisplayOrder, s.Id
                             select s;
                 var stores = query.ToList();
                 return stores;
+            });
+        }
+        /// <summary>
+        /// Gets all stores (cached store entities for performance optimization)
+        /// </summary>
+        /// <returns>Stores</returns>
+        public virtual IList<StoreForCaching> GetAllCachedStores()
+        {
+            return _staticCacheManager.Get(CACHEDSTORES_ALL_KEY, () =>
+            {
+                return GetAllStores().Select(s => new StoreForCaching(s)).ToList();
             });
         }
 
@@ -113,6 +144,23 @@ namespace Nop.Services.Stores
             string key = string.Format(STORES_BY_ID_KEY, storeId);
             return _cacheManager.Get(key, () => _storeRepository.GetById(storeId));
         }
+        /// <summary>
+        /// Gets a store (cached store entity for performance optimization)
+        /// </summary>
+        /// <param name="storeId">Store identifier</param>
+        /// <returns>Store</returns>
+        public virtual StoreForCaching GetCachedStoreById(int storeId)
+        {
+            string key = string.Format(STORES_BY_ID_KEY, storeId);
+            return _staticCacheManager.Get(key, () =>
+            {
+                var store = GetStoreById(storeId);
+                if (store == null)
+                    return null;
+
+                return new StoreForCaching(store);
+            });
+        }
 
         /// <summary>
         /// Inserts a store
@@ -126,6 +174,7 @@ namespace Nop.Services.Stores
             _storeRepository.Insert(store);
 
             _cacheManager.RemoveByPattern(STORES_PATTERN_KEY);
+            _staticCacheManager.RemoveByPattern(CACHEDSTORES_PATTERN_KEY);
 
             //event notification
             _eventPublisher.EntityInserted(store);
@@ -143,6 +192,7 @@ namespace Nop.Services.Stores
             _storeRepository.Update(store);
 
             _cacheManager.RemoveByPattern(STORES_PATTERN_KEY);
+            _staticCacheManager.RemoveByPattern(CACHEDSTORES_PATTERN_KEY);
 
             //event notification
             _eventPublisher.EntityUpdated(store);

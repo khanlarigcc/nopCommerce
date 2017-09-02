@@ -92,7 +92,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             if (!excludeProperties && blogPost != null)
                 model.SelectedStoreIds = _storeMappingService.GetStoresIdsWithAccess(blogPost).ToList();
 
-            var allStores = _storeService.GetAllStores();
+            var allStores = _storeService.GetAllCachedStores();
             foreach (var store in allStores)
             {
                 model.AvailableStores.Add(new SelectListItem
@@ -109,7 +109,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             blogPost.LimitedToStores = model.SelectedStoreIds.Any();
 
             var existingStoreMappings = _storeMappingService.GetStoreMappings(blogPost);
-            var allStores = _storeService.GetAllStores();
+            var allStores = _storeService.GetAllCachedStores();
             foreach (var store in allStores)
             {
                 if (model.SelectedStoreIds.Contains(store.Id))
@@ -146,7 +146,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
             //stores
             model.AvailableStores.Add(new SelectListItem { Text = _localizationService.GetResource("Admin.Common.All"), Value = "0" });
-            foreach (var store in _storeService.GetAllStores())
+            foreach (var store in _storeService.GetAllCachedStores())
                 model.AvailableStores.Add(new SelectListItem { Text = store.Name, Value = store.Id.ToString() });
 
             return View(model);
@@ -366,7 +366,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
             var comments = _blogService.GetAllComments(0, 0, filterByBlogPostId, approved, createdOnFromValue, createdOnToValue, model.SearchText);
 
-            var storeNames = _storeService.GetAllStores().ToDictionary(store => store.Id, store => store.Name);
+            var storeNames = _storeService.GetAllCachedStores().ToDictionary(store => store.Id, store => store.Name);
 
             var gridModel = new DataSourceResult
             {

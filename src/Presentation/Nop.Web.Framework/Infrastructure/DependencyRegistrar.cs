@@ -300,7 +300,7 @@ namespace Nop.Web.Framework.Infrastructure
                 {
                     var currentStoreId = c.Resolve<IStoreContext>().CurrentStore.Id;
                     //uncomment the code below if you want load settings per store only when you have two stores installed.
-                    //var currentStoreId = c.Resolve<IStoreService>().GetAllStores().Count > 1
+                    //var currentStoreId = c.Resolve<IStoreService>().GetAllCachedStores().Count > 1
                     //    c.Resolve<IStoreContext>().CurrentStore.Id : 0;
 
                     //although it's better to connect to your database and execute the following SQL:

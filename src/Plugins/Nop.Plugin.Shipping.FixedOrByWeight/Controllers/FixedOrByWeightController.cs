@@ -195,7 +195,7 @@ namespace Nop.Plugin.Shipping.FixedOrByWeight.Controllers
                 var shippingMethod = _shippingService.GetShippingMethodById(x.ShippingMethodId);
                 m.ShippingMethodName = (shippingMethod != null) ? shippingMethod.Name : "Unavailable";
                 //store
-                var store = _storeService.GetStoreById(x.StoreId);
+                var store = _storeService.GetCachedStoreById(x.StoreId);
                 m.StoreName = (store != null) ? store.Name : "*";
                 //warehouse
                 var warehouse = _shippingService.GetWarehouseById(x.WarehouseId);
@@ -255,7 +255,7 @@ namespace Nop.Plugin.Shipping.FixedOrByWeight.Controllers
 
             //stores
             model.AvailableStores.Add(new SelectListItem { Text = "*", Value = "0" });
-            foreach (var store in _storeService.GetAllStores())
+            foreach (var store in _storeService.GetAllCachedStores())
                 model.AvailableStores.Add(new SelectListItem { Text = store.Name, Value = store.Id.ToString() });
             //warehouses
             model.AvailableWarehouses.Add(new SelectListItem { Text = "*", Value = "0" });
@@ -337,14 +337,14 @@ namespace Nop.Plugin.Shipping.FixedOrByWeight.Controllers
             if (!shippingMethods.Any())
                 return Content("No shipping methods can be loaded");
 
-            var selectedStore = _storeService.GetStoreById(sbw.StoreId);
+            var selectedStore = _storeService.GetCachedStoreById(sbw.StoreId);
             var selectedWarehouse = _shippingService.GetWarehouseById(sbw.WarehouseId);
             var selectedShippingMethod = _shippingService.GetShippingMethodById(sbw.ShippingMethodId);
             var selectedCountry = _countryService.GetCountryById(sbw.CountryId);
             var selectedState = _stateProvinceService.GetStateProvinceById(sbw.StateProvinceId);
             //stores
             model.AvailableStores.Add(new SelectListItem { Text = "*", Value = "0" });
-            foreach (var store in _storeService.GetAllStores())
+            foreach (var store in _storeService.GetAllCachedStores())
                 model.AvailableStores.Add(new SelectListItem { Text = store.Name, Value = store.Id.ToString(), Selected = (selectedStore != null && store.Id == selectedStore.Id) });
             //warehouses
             model.AvailableWarehouses.Add(new SelectListItem { Text = "*", Value = "0" });

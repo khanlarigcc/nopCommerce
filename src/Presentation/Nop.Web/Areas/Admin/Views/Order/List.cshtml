@@ -7,7 +7,7 @@
 @{
     var defaultGridPageSize = adminAreaSettings.DefaultGridPageSize;
     var gridPageSizes = adminAreaSettings.GridPageSizes;
-    var stores = storeService.GetAllStores();
+    var stores = storeService.GetAllCachedStores();
 
     //page title
     ViewBag.Title = T("Admin.Orders").Text;

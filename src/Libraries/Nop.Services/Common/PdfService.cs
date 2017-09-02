@@ -255,7 +255,7 @@ namespace Nop.Services.Common
                 headerTable.DefaultCell.Border = Rectangle.NO_BORDER;
 
                 //store info
-                var store = _storeService.GetStoreById(order.StoreId) ?? _storeContext.CurrentStore;
+                var store = _storeService.GetCachedStoreById(order.StoreId) ?? _storeContext.CurrentStore;
                 var anchor = new Anchor(store.Url.Trim(new [] { '/' }), font);
                 anchor.Reference = store.Url;
 

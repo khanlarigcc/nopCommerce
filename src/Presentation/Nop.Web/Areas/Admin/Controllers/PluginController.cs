@@ -111,7 +111,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             {
                 //stores
                 pluginModel.SelectedStoreIds = pluginDescriptor.LimitedToStores;
-                var allStores = _storeService.GetAllStores();
+                var allStores = _storeService.GetAllCachedStores();
                 foreach (var store in allStores)
                 {
                     pluginModel.AvailableStores.Add(new SelectListItem

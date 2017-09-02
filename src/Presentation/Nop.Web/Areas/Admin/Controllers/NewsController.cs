@@ -92,7 +92,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             if (!excludeProperties && newsItem != null)
                 model.SelectedStoreIds = _storeMappingService.GetStoresIdsWithAccess(newsItem).ToList();
 
-            var allStores = _storeService.GetAllStores();
+            var allStores = _storeService.GetAllCachedStores();
             foreach (var store in allStores)
             {
                 model.AvailableStores.Add(new SelectListItem
@@ -109,7 +109,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             newsItem.LimitedToStores = model.SelectedStoreIds.Any();
 
             var existingStoreMappings = _storeMappingService.GetStoreMappings(newsItem);
-            var allStores = _storeService.GetAllStores();
+            var allStores = _storeService.GetAllCachedStores();
             foreach (var store in allStores)
             {
                 if (model.SelectedStoreIds.Contains(store.Id))
@@ -145,7 +145,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             var model = new NewsItemListModel();
             //stores
             model.AvailableStores.Add(new SelectListItem { Text = _localizationService.GetResource("Admin.Common.All"), Value = "0" });
-            foreach (var s in _storeService.GetAllStores())
+            foreach (var s in _storeService.GetAllCachedStores())
                 model.AvailableStores.Add(new SelectListItem { Text = s.Name, Value = s.Id.ToString() });
 
             return View(model);
@@ -368,7 +368,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
             var comments = _newsService.GetAllComments(0, 0, filterByNewsItemId, approved, createdOnFromValue, createdOnToValue, model.SearchText);
 
-            var storeNames = _storeService.GetAllStores().ToDictionary(store => store.Id, store => store.Name);
+            var storeNames = _storeService.GetAllCachedStores().ToDictionary(store => store.Id, store => store.Name);
 
             var gridModel = new DataSourceResult
             {

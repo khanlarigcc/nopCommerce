@@ -74,7 +74,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
             //stores
             model.AvailableStores.Add(new SelectListItem { Text = _localizationService.GetResource("Admin.Common.All"), Value = "0" });
-            foreach (var s in _storeService.GetAllStores())
+            foreach (var s in _storeService.GetAllCachedStores())
                 model.AvailableStores.Add(new SelectListItem { Text = s.Name, Value = s.Id.ToString() });
 
             //active
@@ -128,7 +128,7 @@ namespace Nop.Web.Areas.Admin.Controllers
                 Data = newsletterSubscriptions.Select(x =>
 				{
 					var m = x.ToModel();
-				    var store = _storeService.GetStoreById(x.StoreId);
+				    var store = _storeService.GetCachedStoreById(x.StoreId);
 				    m.StoreName = store != null ? store.Name : "Unknown store";
 					m.CreatedOn = _dateTimeHelper.ConvertToUserTime(x.CreatedOnUtc, DateTimeKind.Utc).ToLongTimeString();
 					return m;

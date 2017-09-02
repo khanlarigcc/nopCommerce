@@ -830,7 +830,7 @@ namespace Nop.Services.Messages
         /// <returns>Store URL</returns>
         protected virtual string GetStoreUrl(int storeId = 0, bool removeTailingSlash = true)
         {
-            var store = _storeService.GetStoreById(storeId) ?? _storeContext.CurrentStore;
+            var store = _storeService.GetCachedStoreById(storeId) ?? _storeContext.CurrentStore;
 
             if (store == null)
                 throw new Exception("No store could be loaded");

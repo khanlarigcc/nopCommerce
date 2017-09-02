@@ -165,7 +165,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual IActionResult ChangeStoreScopeConfiguration(int storeid, string returnUrl = "")
         {
-            var store = _storeService.GetStoreById(storeid);
+            var store = _storeService.GetCachedStoreById(storeid);
             if (store != null || storeid == 0)
             {
                 _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer,
@@ -2209,7 +2209,7 @@ namespace Nop.Web.Areas.Admin.Controllers
                                 }
                                 else
                                 {
-                                    var store = _storeService.GetStoreById(x.StoreId);
+                                    var store = _storeService.GetCachedStoreById(x.StoreId);
                                     storeName = store != null ? store.Name : "Unknown";
                                 }
                                 var settingModel = new SettingModel

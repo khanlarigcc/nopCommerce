@@ -392,7 +392,7 @@ namespace Nop.Web.Areas.Admin.Controllers
                     });
 
             //performance settings
-            if (!_catalogSettings.IgnoreStoreLimitations && _storeService.GetAllStores().Count == 1)
+            if (!_catalogSettings.IgnoreStoreLimitations && _storeService.GetAllCachedStores().Count == 1)
             {
                 model.Add(new SystemWarningModel
                 {

@@ -61,7 +61,7 @@ namespace Nop.Plugin.Tax.FixedOrByCountryStateZip.Controllers
             var model = new ConfigurationModel { CountryStateZipEnabled = _countryStateZipSettings.CountryStateZipEnabled };
             //stores
             model.AvailableStores.Add(new SelectListItem { Text = "*", Value = "0" });
-            var stores = _storeService.GetAllStores();
+            var stores = _storeService.GetAllCachedStores();
             foreach (var s in stores)
                 model.AvailableStores.Add(new SelectListItem { Text = s.Name, Value = s.Id.ToString() });
             //tax categories
@@ -168,7 +168,7 @@ namespace Nop.Plugin.Tax.FixedOrByCountryStateZip.Controllers
                         Percentage = x.Percentage,
                     };
                     //store
-                    var store = _storeService.GetStoreById(x.StoreId);
+                    var store = _storeService.GetCachedStoreById(x.StoreId);
                     m.StoreName = store != null ? store.Name : "*";
                     //tax category
                     var tc = _taxCategoryService.GetTaxCategoryById(x.TaxCategoryId);

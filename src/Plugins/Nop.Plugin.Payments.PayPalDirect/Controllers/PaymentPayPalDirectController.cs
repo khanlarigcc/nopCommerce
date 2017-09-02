@@ -91,7 +91,7 @@ namespace Nop.Plugin.Payments.PayPalDirect.Controllers
                     catch (PayPal.PayPalException) { }
                 }
 
-                var currentStore = storeScope > 0 ? _storeService.GetStoreById(storeScope) : _storeContext.CurrentStore;
+                var currentStore = storeScope > 0 ? _storeService.GetCachedStoreById(storeScope) : _storeContext.CurrentStore;
                 var webhook = new Webhook
                 {
                     event_types = new List<WebhookEventType> { new WebhookEventType { name = "*" } },

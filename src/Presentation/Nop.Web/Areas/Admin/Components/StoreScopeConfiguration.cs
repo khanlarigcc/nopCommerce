@@ -21,7 +21,7 @@ namespace Nop.Web.Areas.Admin.Components
 
         public IViewComponentResult Invoke()
         {
-            var allStores = _storeService.GetAllStores();
+            var allStores = _storeService.GetAllCachedStores();
             if (allStores.Count < 2)
                 return Content("");
 
@@ -42,11 +42,11 @@ namespace Nop.Web.Areas.Admin.Components
         private int GetActiveStoreScopeConfiguration(IStoreService storeService, IWorkContext workContext)
         {
             //ensure that we have 2 (or more) stores
-            if (storeService.GetAllStores().Count < 2)
+            if (storeService.GetAllCachedStores().Count < 2)
                 return 0;
 
             var storeId = workContext.CurrentCustomer.GetAttribute<int>(SystemCustomerAttributeNames.AdminAreaStoreScopeConfiguration);
-            var store = storeService.GetStoreById(storeId);
+            var store = storeService.GetCachedStoreById(storeId);
 
             return store != null ? store.Id : 0;
         }

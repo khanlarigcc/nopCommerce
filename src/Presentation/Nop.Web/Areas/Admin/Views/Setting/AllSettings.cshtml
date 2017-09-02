@@ -179,7 +179,7 @@
                                 Name: "@T("Admin.Configuration.Settings.AllSettings.Fields.StoreName.AllStores")"
                             }
                             @{
-                                var allStores = storeService.GetAllStores();
+                                var allStores = storeService.GetAllCachedStores();
                             }
                             @foreach (var store in allStores)
                             {

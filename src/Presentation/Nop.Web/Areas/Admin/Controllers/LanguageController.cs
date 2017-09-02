@@ -70,7 +70,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             if (!excludeProperties && language != null)
                 model.SelectedStoreIds = _storeMappingService.GetStoresIdsWithAccess(language).ToList();
 
-            var allStores = _storeService.GetAllStores();
+            var allStores = _storeService.GetAllCachedStores();
             foreach (var store in allStores)
             {
                 model.AvailableStores.Add(new SelectListItem
@@ -109,7 +109,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             language.LimitedToStores = model.SelectedStoreIds.Any();
 
             var existingStoreMappings = _storeMappingService.GetStoreMappings(language);
-            var allStores = _storeService.GetAllStores();
+            var allStores = _storeService.GetAllCachedStores();
             foreach (var store in allStores)
             {
                 if (model.SelectedStoreIds.Contains(store.Id))

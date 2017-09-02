@@ -127,7 +127,7 @@ namespace Nop.Services.Stores
         /// Inserts a store mapping record
         /// </summary>
         /// <param name="storeMapping">Store mapping</param>
-        public virtual void InsertStoreMapping(StoreMapping storeMapping)
+        protected virtual void InsertStoreMapping(StoreMapping storeMapping)
         {
             if (storeMapping == null)
                 throw new ArgumentNullException(nameof(storeMapping));
@@ -167,25 +167,7 @@ namespace Nop.Services.Stores
 
             InsertStoreMapping(storeMapping);
         }
-
-        /// <summary>
-        /// Updates the store mapping record
-        /// </summary>
-        /// <param name="storeMapping">Store mapping</param>
-        public virtual void UpdateStoreMapping(StoreMapping storeMapping)
-        {
-            if (storeMapping == null)
-                throw new ArgumentNullException(nameof(storeMapping));
-
-            _storeMappingRepository.Update(storeMapping);
-
-            //cache
-            _cacheManager.RemoveByPattern(STOREMAPPING_PATTERN_KEY);
-
-            //event notification
-            _eventPublisher.EntityUpdated(storeMapping);
-        }
-
+        
         /// <summary>
         /// Find store identifiers with granted access (mapped to the entity)
         /// </summary>

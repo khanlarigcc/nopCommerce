@@ -107,7 +107,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             {
                 Data = cart.Select(sci =>
                 {
-                    var store = _storeService.GetStoreById(sci.StoreId);
+                    var store = _storeService.GetCachedStoreById(sci.StoreId);
                     var sciModel = new ShoppingCartItemModel
                     {
                         Id = sci.Id,
@@ -176,7 +176,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             {
                 Data = cart.Select(sci =>
                 {
-                    var store = _storeService.GetStoreById(sci.StoreId);
+                    var store = _storeService.GetCachedStoreById(sci.StoreId);
                     var sciModel = new ShoppingCartItemModel
                     {
                         Id = sci.Id,

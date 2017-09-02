@@ -95,14 +95,14 @@ namespace Nop.Services.Tests.Orders
         private AddressSettings _addressSettings;
         private ICustomNumberFormatter _customNumberFormatter;
 
-        private Store _store;
+        private StoreForCaching _store;
 
         [SetUp]
         public new void SetUp()
         {
             _workContext = null;
 
-            _store = new Store { Id = 1 };
+            _store = new StoreForCaching { Id = 1 };
             _storeContext = MockRepository.GenerateMock<IStoreContext>();
             _storeContext.Expect(x => x.CurrentStore).Return(_store);
 

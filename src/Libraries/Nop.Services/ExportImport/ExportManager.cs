@@ -1445,7 +1445,7 @@ namespace Nop.Services.ExportImport
                 xmlWriter.WriteElementString("VatNumberStatusId", null, customer.GetAttribute<int>(SystemCustomerAttributeNames.VatNumberStatusId).ToString());
                 xmlWriter.WriteElementString("TimeZoneId", null, customer.GetAttribute<string>(SystemCustomerAttributeNames.TimeZoneId));
 
-                foreach (var store in _storeService.GetAllStores())
+                foreach (var store in _storeService.GetAllCachedStores())
                 {
                     var newsletter = _newsLetterSubscriptionService.GetNewsLetterSubscriptionByEmailAndStoreId(customer.Email, store.Id);
                     bool subscribedToNewsletters = newsletter != null && newsletter.Active;

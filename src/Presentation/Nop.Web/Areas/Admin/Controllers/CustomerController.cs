@@ -482,7 +482,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         
         protected virtual void PrepareCustomerModel(CustomerModel model, Customer customer, bool excludeProperties)
         {
-            var allStores = _storeService.GetAllStores();
+            var allStores = _storeService.GetAllCachedStores();
             if (customer != null)
             {
                 model.Id = customer.Id;
@@ -943,7 +943,7 @@ namespace Nop.Web.Areas.Admin.Controllers
                 //newsletter subscriptions
                 if (!String.IsNullOrEmpty(customer.Email))
                 {
-                    var allStores = _storeService.GetAllStores();
+                    var allStores = _storeService.GetAllCachedStores();
                     foreach (var store in allStores)
                     {
                         var newsletterSubscription = _newsLetterSubscriptionService
@@ -1196,7 +1196,7 @@ namespace Nop.Web.Areas.Admin.Controllers
                     //newsletter subscriptions
                     if (!String.IsNullOrEmpty(customer.Email))
                     {
-                        var allStores = _storeService.GetAllStores();
+                        var allStores = _storeService.GetAllCachedStores();
                         foreach (var store in allStores)
                         {
                             var newsletterSubscription = _newsLetterSubscriptionService
@@ -1429,7 +1429,7 @@ namespace Nop.Web.Areas.Admin.Controllers
                 _customerService.DeleteCustomer(customer);
 
                 //remove newsletter subscription (if exists)
-                foreach (var store in _storeService.GetAllStores())
+                foreach (var store in _storeService.GetAllCachedStores())
                 {
                     var subscription = _newsLetterSubscriptionService.GetNewsLetterSubscriptionByEmailAndStoreId(customer.Email, store.Id);
                     if (subscription != null)
@@ -1637,7 +1637,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             {
                 Data = rewardPoints.Select(rph =>
                 {
-                    var store = _storeService.GetStoreById(rph.StoreId);
+                    var store = _storeService.GetCachedStoreById(rph.StoreId);
                     var activatingDate = _dateTimeHelper.ConvertToUserTime(rph.CreatedOnUtc, DateTimeKind.Utc);
 
                     return new CustomerModel.RewardPointsHistoryModel
@@ -1878,7 +1878,7 @@ namespace Nop.Web.Areas.Admin.Controllers
                 Data = orders.PagedForCommand(command)
                     .Select(order =>
                     {
-                        var store = _storeService.GetStoreById(order.StoreId);
+                        var store = _storeService.GetCachedStoreById(order.StoreId);
                         var orderModel = new CustomerModel.OrderModel
                         {
                             Id = order.Id, 
@@ -2140,7 +2140,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             {
                 Data = cart.Select(sci =>
                 {
-                    var store = _storeService.GetStoreById(sci.StoreId);
+                    var store = _storeService.GetCachedStoreById(sci.StoreId);
                     var sciModel = new ShoppingCartItemModel
                     {
                         Id = sci.Id,
@@ -2209,7 +2209,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             {
                 Data = subscriptions.Select(x =>
                 {
-                    var store = _storeService.GetStoreById(x.StoreId);
+                    var store = _storeService.GetCachedStoreById(x.StoreId);
                     var product = x.Product;
                     var m = new CustomerModel.BackInStockSubscriptionModel
                     {

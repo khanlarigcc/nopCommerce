@@ -2,6 +2,7 @@ using System;
 using System.Linq.Expressions;
 using System.Reflection;
 using Nop.Core;
+using Nop.Core.Caching;
 using Nop.Core.Configuration;
 using Nop.Core.Domain.Localization;
 using Nop.Core.Domain.Security;
@@ -83,7 +84,14 @@ namespace Nop.Services.Localization
             string resultStr = string.Empty;
 
             //load localized value
-            string localeKeyGroup = typeof(T).Name;
+            string localeKeyGroup;
+            //check whether it's a cacheable entity. In such cases we load its base class name (real entity type)
+            if (entity is IEntityForCaching)
+                localeKeyGroup = entity.GetType()?.BaseType?.Name;
+            else
+                localeKeyGroup = typeof(T).Name;
+            if (String.IsNullOrEmpty(localeKeyGroup))
+                throw new Exception("Key group cannot be loaded");
             string localeKey = propInfo.Name;
 
             if (languageId > 0)

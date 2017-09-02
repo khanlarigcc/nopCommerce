@@ -459,7 +459,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             model.OrderStatusId = order.OrderStatusId;
             model.OrderGuid = order.OrderGuid;
             model.CustomOrderNumber = order.CustomOrderNumber;
-            var store = _storeService.GetStoreById(order.StoreId);
+            var store = _storeService.GetCachedStoreById(order.StoreId);
             model.StoreName = store != null ? store.Name : "Unknown";
             model.CustomerId = order.CustomerId;
             var customer = order.Customer;
@@ -1107,7 +1107,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
             //stores
             model.AvailableStores.Add(new SelectListItem { Text = _localizationService.GetResource("Admin.Common.All"), Value = "0" });
-            foreach (var s in _storeService.GetAllStores())
+            foreach (var s in _storeService.GetAllCachedStores())
                 model.AvailableStores.Add(new SelectListItem { Text = s.Name, Value = s.Id.ToString() });
 
             //vendors
@@ -1194,7 +1194,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             {
                 Data = orders.Select(x =>
                 {
-                    var store = _storeService.GetStoreById(x.StoreId);
+                    var store = _storeService.GetCachedStoreById(x.StoreId);
                     return new OrderModel
                     {
                         Id = x.Id,
@@ -3913,7 +3913,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
             //stores
             model.AvailableStores.Add(new SelectListItem { Text = _localizationService.GetResource("Admin.Common.All"), Value = "0" });
-            foreach (var s in _storeService.GetAllStores())
+            foreach (var s in _storeService.GetAllCachedStores())
                 model.AvailableStores.Add(new SelectListItem { Text = s.Name, Value = s.Id.ToString() });
 
             //order statuses
@@ -4030,7 +4030,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
             //stores
             model.AvailableStores.Add(new SelectListItem { Text = _localizationService.GetResource("Admin.Common.All"), Value = "0" });
-            foreach (var s in _storeService.GetAllStores())
+            foreach (var s in _storeService.GetAllCachedStores())
                 model.AvailableStores.Add(new SelectListItem { Text = s.Name, Value = s.Id.ToString() });
 
             //vendors

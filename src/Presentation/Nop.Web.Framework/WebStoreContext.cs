@@ -16,7 +16,7 @@ namespace Nop.Web.Framework
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IStoreService _storeService;
 
-        private Store _cachedStore;
+        private StoreForCaching _cachedStore;
 
         public WebStoreContext(IHttpContextAccessor httpContextAccessor, IStoreService storeService)
         {
@@ -27,7 +27,7 @@ namespace Nop.Web.Framework
         /// <summary>
         /// Gets or sets the current store
         /// </summary>
-        public virtual Store CurrentStore
+        public virtual StoreForCaching CurrentStore
         {
             get
             {
@@ -37,7 +37,7 @@ namespace Nop.Web.Framework
                 //try to determine the current store by HOST header
                 string host = _httpContextAccessor.HttpContext?.Request?.Headers[HeaderNames.Host];
 
-                var allStores = _storeService.GetAllStores();
+                var allStores = _storeService.GetAllCachedStores();
                 var store = allStores.FirstOrDefault(s => s.ContainsHostValue(host));
 
                 if (store == null)

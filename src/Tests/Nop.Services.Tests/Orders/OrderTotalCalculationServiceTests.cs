@@ -57,7 +57,7 @@ namespace Nop.Services.Tests.Orders
         private ShoppingCartSettings _shoppingCartSettings;
         private CatalogSettings _catalogSettings;
         private IEventPublisher _eventPublisher;
-        private Store _store;
+        private StoreForCaching _store;
         private IProductService _productService;
         private IGeoLookupService _geoLookupService;
         private ICountryService _countryService;
@@ -72,7 +72,7 @@ namespace Nop.Services.Tests.Orders
         {
             _workContext = MockRepository.GenerateMock<IWorkContext>();
 
-            _store = new Store { Id = 1 };
+            _store = new StoreForCaching { Id = 1 };
             _storeContext = MockRepository.GenerateMock<IStoreContext>();
             _storeContext.Expect(x => x.CurrentStore).Return(_store);
 
