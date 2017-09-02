@@ -242,6 +242,9 @@ set @resources='
   <LocaleResource Name="ShoppingCart.EstimateShipping.ZipPostalCode.Required">
     <Value>Zip / postal code is required</Value>
   </LocaleResource>
+  <LocaleResource Name="Plugins.DiscountRules.CustomerRoles.Fields.CustomerRole.Select">
+    <Value>Select customer role</Value>
+  </LocaleResource>
 </Language>
 '
 
